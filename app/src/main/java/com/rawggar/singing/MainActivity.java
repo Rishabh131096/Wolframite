@@ -89,9 +89,4 @@ public class MainActivity extends Activity {
         int read_external_storage = ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE);
         return read_external_storage == PackageManager.PERMISSION_GRANTED && write_external_storage_result == PackageManager.PERMISSION_GRANTED && record_audio_result == PackageManager.PERMISSION_GRANTED;
     }
-
-
-
-
-
 }
