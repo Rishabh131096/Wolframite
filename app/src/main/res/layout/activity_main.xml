@@ -3,21 +3,99 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/musicbg"
-    android:gravity="bottom"
-    tools:context=".MainActivity">
+    android:background="?attr/selectableItemBackground"
+    tools:context=".MainActivity"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/chime"
+        />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_height="3dp"
+            android:background="#211915"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"></View>
 
     <ImageButton
         android:onClick="recordAudio"
         android:scaleType="fitCenter"
-        android:background="@android:color/transparent"
-        android:layout_gravity="right"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:src="@drawable/mic"/>
+        android:background="@drawable/icons_state"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_microphone" />
 
+        <View
+            android:layout_width="0dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_height="3dp"
+            android:background="#211915"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"></View>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Start Singing!"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="5dp"
+        android:textStyle="bold"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_height="2dp"
+        android:background="#211915"
+        android:layout_marginTop="50dp"></View>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_height="2dp"
+        android:background="#211915"
+        android:layout_marginTop="10dp"></View>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_height="2dp"
+        android:background="#211915"
+        android:layout_marginTop="10dp"></View>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_height="2dp"
+        android:background="#211915"
+        android:layout_marginTop="10dp"></View>
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_height="2dp"
+        android:background="#211915"
+        android:layout_marginTop="10dp"></View>
 
 
 </LinearLayout>

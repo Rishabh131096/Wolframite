@@ -22,7 +22,7 @@ public class SplashScreenActivity extends Activity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent=new Intent(getApplication(),MainActivity.class);
                 startActivity(intent);
                 overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
                 finish();

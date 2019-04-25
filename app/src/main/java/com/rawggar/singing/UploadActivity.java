@@ -3,12 +3,14 @@ package com.rawggar.singing;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -45,10 +47,13 @@ public class UploadActivity extends Activity {
     private static final String AUDIO_FILE_PATH =
             Environment.getExternalStorageDirectory().getPath() + "/recorded_audio.wav";
 
+    private static boolean semaphore = true;
+
     OkHttpClient okHttpClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        semaphore=true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
 
@@ -61,7 +66,7 @@ public class UploadActivity extends Activity {
         AndroidAudioRecorder.with(this)
                 // Required
                 .setFilePath(AUDIO_FILE_PATH)
-                .setColor(ContextCompat.getColor(this, R.color.color_red))
+                .setColor(ContextCompat.getColor(this, R.color.color_sign_gray))
                 .setRequestCode(REQUEST_RECORD_AUDIO)
 
                 // Optional
@@ -101,11 +106,14 @@ public class UploadActivity extends Activity {
 
     public void uploadAudio(View v){
 
+        TextView textView = (TextView)findViewById(R.id.processingText);
+        textView.setText("Processing...");
 
-
-        cleanWAV();
-
-
+        if(semaphore) {
+            semaphore=false;
+            cleanWAV();
+        }
+        else{}
 
     }
 

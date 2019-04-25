@@ -5,18 +5,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/musicbg"
-    android:gravity="bottom"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_horizontal"
     tools:context=".MainActivity">
 
-    <ImageButton
-        android:onClick="uploadAudio"
-        android:scaleType="fitCenter"
-        android:background="@android:color/transparent"
-        android:layout_gravity="right"
+    <ImageView
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/upload"/>
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/chime"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp">
+        <View
+            android:layout_width="0dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_height="3dp"
+            android:background="#211915"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"></View>
+    <ImageButton
+        android:onClick="uploadAudio"
+        android:padding="60dp"
+        android:background="@drawable/icons_state"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_vinyl"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_height="3dp"
+            android:background="#211915"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"></View>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Process"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="5dp"
+        android:textStyle="bold"
+        android:id="@+id/processingText"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/soundwav"
+        />
 
 
 

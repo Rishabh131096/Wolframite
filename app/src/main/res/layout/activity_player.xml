@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/blurbg"
+        android:background="@drawable/waves"
         android:scaleType="centerCrop"
         android:layout_above="@+id/imageBottom"/>
 
@@ -18,7 +18,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="39dp"
-        android:text="Music App"
+        android:text="Chime"
+        android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
@@ -37,7 +38,7 @@
             android:layout_width="304dp"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            app:imageCover="@drawable/imagetest" />
+            app:imageCover="@drawable/waves" />
 
     </RelativeLayout>
 
