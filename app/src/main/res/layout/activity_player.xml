@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/waves"
+        android:background="@drawable/waves_back"
         android:scaleType="centerCrop"
         android:layout_above="@+id/imageBottom"/>
 
@@ -41,14 +41,6 @@
             app:imageCover="@drawable/waves" />
 
     </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/imageBottom"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#262626"
-        android:layout_alignParentBottom="true"/>
 
     <RelativeLayout
         android:layout_width="100dp"

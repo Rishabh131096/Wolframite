@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +46,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UploadActivity extends Activity {
+    private final String TAG = "UploadActivity";
+
     private static final int REQUEST_RECORD_AUDIO = 0;
     private static final String AUDIO_FILE_PATH =
             Environment.getExternalStorageDirectory().getPath() + "/recorded_audio.wav";
 
     private static boolean semaphore = true;
+    Animation animRotate;
 
     OkHttpClient okHttpClient;
 
@@ -56,6 +62,7 @@ public class UploadActivity extends Activity {
         semaphore=true;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+
 
         okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(1, TimeUnit.MINUTES)
@@ -81,13 +88,15 @@ public class UploadActivity extends Activity {
         AndroidAudioConverter.load(this, new ILoadCallback() {
             @Override
             public void onSuccess() {
-                Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_SHORT).show();
                 // Great!
+                Log.d(TAG, "onSuccess: Converted Audio");
             }
             @Override
             public void onFailure(Exception error) {
                 // FFmpeg is not supported by device
-                Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(),"Failure",Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: Could not convert Audio");
             }
         });
 
@@ -97,17 +106,25 @@ public class UploadActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_RECORD_AUDIO) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(this, "Audio recorded successfully!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Audio recorded successfully!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onActivityResult: Audio Recorded Successfully");
             } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "Audio was not recorded", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Audio was not recorded", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onActivityResult: Audio was not Recorded");
             }
         }
     }
 
     public void uploadAudio(View v){
 
-        TextView textView = (TextView)findViewById(R.id.processingText);
-        textView.setText("Processing...");
+        TextView processText = (TextView)findViewById(R.id.processingText);
+        ImageButton photo_upload = (ImageButton)findViewById(R.id.btn_process);
+
+        processText.setText("Processing...");
+
+        animRotate = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.rotate);
+        photo_upload.startAnimation(animRotate);
 
         if(semaphore) {
             semaphore=false;
@@ -119,10 +136,20 @@ public class UploadActivity extends Activity {
 
     public void processAudio(){
 
-        final ProgressDialog mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Processing...");
-        mProgressDialog.show();
+//        final ProgressDialog mProgressDialog = new ProgressDialog(this);
+//        mProgressDialog.setIndeterminate(true);
+//        mProgressDialog.setMessage("Processing...");
+//        mProgressDialog.show();
+
+        TextView processText = (TextView)findViewById(R.id.processingText);
+        processText.setText("Processing...");
+
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+
+//        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+//        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.5, 30);
+//        myAnim.setInterpolator(interpolator);
+//        photo_upload.startAnimation(myAnim);
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -143,34 +170,48 @@ public class UploadActivity extends Activity {
             @Override
             public void onResponse(Call<processingModel> call, Response<processingModel> response) {
 
-                if(mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
+//                if(mProgressDialog.isShowing())
+//                    mProgressDialog.dismiss();
 
                 if(response.message()!=null){
 
-                    Toast.makeText(getApplicationContext(),response.message(),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),response.message(),Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "onResponse: "+ response.message());
                     downloadAudio();
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"null received",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),"null received",Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "onResponse: Null Recieved");
                 }
             }
 
             @Override
             public void onFailure(Call<processingModel> call, Throwable t) {
-                if(mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(),"failure on processing",Toast.LENGTH_LONG).show();
+//                if(mProgressDialog.isShowing())
+//                    mProgressDialog.dismiss();
+                    Toast.makeText(getApplicationContext(),"Some Error Occurred in Processing",Toast.LENGTH_LONG).show();
             }
         });
 
     }
 
     public void downloadAudio(){
-        final ProgressDialog mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Downloading...");
-        mProgressDialog.show();
+//        final ProgressDialog mProgressDialog = new ProgressDialog(this);
+//        mProgressDialog.setIndeterminate(true);
+//        mProgressDialog.setMessage("Downloading...");
+//        mProgressDialog.show();
+        TextView processText = (TextView)findViewById(R.id.processingText);
+        processText.setText("Downloading...");
+        // Use bounce interpolator with amplitude 0.2 and frequency 20
+
+//        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+//        MyBounceInterpolator interpolator = new MyBounceInterpolator(0.5, 30);
+//        myAnim.setInterpolator(interpolator);
+//        photo_upload.startAnimation(myAnim);
+
+//        animRotate = AnimationUtils.loadAnimation(getApplicationContext(),
+//                R.anim.rotate);
+//        photo_upload.startAnimation(animRotate);
 
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -189,13 +230,14 @@ public class UploadActivity extends Activity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
+//                if(mProgressDialog.isShowing())
+//                    mProgressDialog.dismiss();
                 if(response.isSuccessful()){
                     boolean writtenToDisk = writeToDisk(response.body());
                     Log.d("Download",writtenToDisk+"");
-                    Toast.makeText(getApplicationContext(),"File downloaded successfully",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(),"File downloaded successfully",Toast.LENGTH_LONG).show();
                     //convert
+                    Log.d(TAG, "onResponse: File Downloaded Suussfully");
                     convertFile();
                 }
                 else{
@@ -206,15 +248,17 @@ public class UploadActivity extends Activity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                if(mProgressDialog.isShowing())
-                    mProgressDialog.dismiss();
-                Toast.makeText(getApplicationContext(),"File could not download",Toast.LENGTH_SHORT).show();
+//                if(mProgressDialog.isShowing())
+//                    mProgressDialog.dismiss();
+                Toast.makeText(getApplicationContext(),"Audio could not be Downloaded",Toast.LENGTH_SHORT).show();
 
             }
         });
     }
 
     public void convertFile(){
+        TextView processText = (TextView)findViewById(R.id.processingText);
+        processText.setText("Converting.");
         final ProgressDialog mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setIndeterminate(true);
         mProgressDialog.setMessage("Converting...");
@@ -227,7 +271,9 @@ public class UploadActivity extends Activity {
 
                     if(mProgressDialog.isShowing())
                         mProgressDialog.dismiss();
-                    Toast.makeText(getApplicationContext(), "Success Converting", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Success Converting", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onSuccess: Success Converting");
+
                     //now play the player
                     Intent i = new Intent(getApplicationContext(),PlayerActivity.class);
                     startActivity(i);
@@ -256,13 +302,17 @@ public class UploadActivity extends Activity {
     }
 
     public void cleanWAV(){
+        TextView processText = (TextView)findViewById(R.id.processingText);
+        processText.setText("Converting..");
         File flacFile = new File(Environment.getExternalStorageDirectory(), "recorded_audio.wav");
         IConvertCallback callback = new IConvertCallback() {
             @Override
             public void onSuccess(File convertedFile) {
                 // So fast? Love it!
 
-                Toast.makeText(getApplicationContext(), "Success Converting", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Success Converting", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onSuccess: Success Converting");
+
 
                 cleanWAV2();
             }
@@ -288,14 +338,16 @@ public class UploadActivity extends Activity {
     }
 
     public void cleanWAV2(){
-
+        final TextView processText = (TextView)findViewById(R.id.processingText);
+        processText.setText("Converting...");
         File flacFile = new File(Environment.getExternalStorageDirectory(), "recorded_audio.mp3");
         IConvertCallback callback = new IConvertCallback() {
             @Override
             public void onSuccess(File convertedFile) {
                 // So fast? Love it!
 
-                Toast.makeText(getApplicationContext(), "Success Converting", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), "Success Converting", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onSuccess: Success Converting");
 
 //                final ProgressDialog mProgressDialog = new ProgressDialog(getApplicationContext());
 //                mProgressDialog.setIndeterminate(true);
@@ -327,11 +379,15 @@ public class UploadActivity extends Activity {
                 Call<MyResponse> call = api.uploadAudio(body);
 
                 //finally performing the call
+
+                processText.setText("Uploading...");
                 call.enqueue(new Callback<MyResponse>() {
                     @Override
                     public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
 
-                        Toast.makeText(getApplicationContext(), "File Uploaded Successfully...", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(), "File Uploaded Successfully...", Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "onResponse: File Uploaded Successfully");
+                        processText.setText("Uploaded Successfully!");
                         //processAudio();
 //                        if (mProgressDialog.isShowing())
 //                            mProgressDialog.dismiss();
@@ -342,6 +398,7 @@ public class UploadActivity extends Activity {
                     @Override
                     public void onFailure(Call<MyResponse> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "onFailure: File not Uploaded Successfully");
 //                        if (mProgressDialog.isShowing())
 //                            mProgressDialog.dismiss();
                     }
