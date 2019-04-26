@@ -259,18 +259,18 @@ public class UploadActivity extends Activity {
     public void convertFile(){
         TextView processText = (TextView)findViewById(R.id.processingText);
         processText.setText("Converting.");
-        final ProgressDialog mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setMessage("Converting...");
-        mProgressDialog.show();
+//        final ProgressDialog mProgressDialog = new ProgressDialog(this);
+//        mProgressDialog.setIndeterminate(true);
+//        mProgressDialog.setMessage("Converting...");
+//        mProgressDialog.show();
             File flacFile = new File(Environment.getExternalStorageDirectory(), "downloadedAudio.wav");
             IConvertCallback callback = new IConvertCallback() {
                 @Override
                 public void onSuccess(File convertedFile) {
                     // So fast? Love it!
 
-                    if(mProgressDialog.isShowing())
-                        mProgressDialog.dismiss();
+//                    if(mProgressDialog.isShowing())
+//                        mProgressDialog.dismiss();
 //                    Toast.makeText(getApplicationContext(), "Success Converting", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onSuccess: Success Converting");
 
@@ -282,8 +282,8 @@ public class UploadActivity extends Activity {
                 @Override
                 public void onFailure(Exception error) {
 
-                    if(mProgressDialog.isShowing())
-                        mProgressDialog.dismiss();
+//                    if(mProgressDialog.isShowing())
+//                        mProgressDialog.dismiss();
                     // Oops! Something went wrong
                 }
             };
